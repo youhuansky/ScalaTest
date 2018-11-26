@@ -1,7 +1,8 @@
-package collection
+package collectionTest
 
 import java.util.Currency
 
+import scala.Boolean
 import scala.collection.mutable.ArrayBuffer
 
 object ArrayTest {
@@ -274,10 +275,9 @@ object ArrayTest {
 
 
     println("-----------------样例类------------------")
-//    case class Dollar(value :Double) extends  Amount
-//    case class Currency(value :Double,str:String) extends  Amount
-//    case object Nothing extends Amount
-     import collection.Amount
+    case class Dollar(value :Double) extends  Amount
+    case class Currency(value :Double,str:String) extends  Amount
+    case object Nothing extends Amount
     for (amt <- Array(Dollar(1000.0),Currency(1000.0, "EUR"),Nothing)) {
       val result = amt match {
         case Dollar(v) => "$" + v
@@ -285,6 +285,42 @@ object ArrayTest {
         case Nothing => ""
       }
       println(amt + ": " + result)
+      println("-----------------高阶函数------------------")
+
+      def plus(x:Int)=x+3
+
+      var result1=Array(1,2,3,4,5).map(plus(_))
+      println(result1.mkString(" "))
+
+      //f:Int =>Double   代表Int是参数类型，Double是返回值类型
+      def highOrderFunction1(f: Int => Double) = f(10)
+      def minus7(x: Int):Double  =x - 7
+      val result2 = highOrderFunction1(minus7)
+      println(result2)
+      println(result2.getClass)
+
+      println("-----------------闭包------------------")
+      def funTest(x1:Int)= (y1:Int)=>x1+y1
+      println(funTest(5)(6))
+
+      println("-----------------抽象控制------------------")
+
+      def funConTest(f1:()=>Boolean)(f2:()=>Unit){
+        if(f1()){
+          f2()
+        }else{
+          print("lalala")
+        }
+      }
+
+      funConTest(()=>false)(()=>print("Hello"))
+      funConTest(()=>true)(()=>print("Hello"))
+
+
+
+
+
+
     }
 
   }
